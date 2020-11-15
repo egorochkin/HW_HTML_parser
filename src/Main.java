@@ -36,8 +36,12 @@ public class Main {
         }
         //Проверяем что передан поддерживаемый параметр
         if ( !fabricMap.containsKey(parameters.get("source"))) throw new IllegalArgumentException("source");
+        //вызываем конкретную фабрику для получения нужного парсера
         Parser vacParser = fabricMap.get(parameters.get("source")).getParser();
+        //создаем Writer и нужный нам файл
         Writer writer = new Writer(parameters.get("file"));
+        //Если переданы все необходимые аргументы, запускаем парсер и передаем результаты его работы
+        //на запись в файл
         if (parameters.size() == 4 && parameters.get("period").chars().allMatch(Character::isDigit)) try {
             writer.writeToFile(vacParser.parse(parameters.get("key"),
                     Integer.parseInt(parameters.get("period"))));
